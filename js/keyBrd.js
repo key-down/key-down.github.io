@@ -21,32 +21,32 @@ let lngs = {
 
 document.addEventListener("keydown", function (event) {
   let namKy = event.code; 
+  
 	// في لوحة QWERTY الإنجليزية: event.code 'KeyQ' → event.key 'q'
 	// في لوحة AZERTY الفرنسية: event.code 'KeyQ' → event.key 'a'
   if (event.code.includes("Key") ) {
     namKy = namKy.slice(3).toLowerCase() // الحصول على اسم المفتاح بدون "Key" 
 	
   }
+
  if(namKy.indexOf('Shift') > -1 && kybrdLng.indexOf('shft') == -1) {
-  kybrdLng= 'shft'+kybrdLng; changeKeyboardLanguage()
+  kybrdLng= 'shft'+kybrdLng;
+  changeKeyboardLanguage()}
   
-}
- 
-  
-	if ( event.key.toLowerCase() != document.getElementById('k'+ namKy).textContent.toLowerCase()
-           ) {
+	if ( event.key.toLowerCase() != document.getElementById('k'+ namKy).textContent.toLowerCase()){
 		if (lngs.ar.indexOf(event.key) !== -1 && lngs.ar.indexOf(event.key) < 30) {
 			kybrdLng = "ar";
-		} else  {
+		} else if (geBy('kq').innerHTML.toLowerCase() == 'q' && event.key.toLowerCase() == 'a') {
 			kybrdLng = "fr";
-		}
-    
+		}else{ kybrdLng = "en";}
+     if(keysDwnKy.indexOf('Shift') > -1 && kybrdLng.indexOf('shft') == -1) {kybrdLng= 'shft'+kybrdLng;}
     changeKeyboardLanguage()
 	}
   
    if (keysDwn.indexOf(namKy) == -1) {
     keysDwn.push(namKy);
-    keysDwnKy.push(event.key);
+    if (event.key == ' ') {keysDwnKy.push('Space')}
+    else{keysDwnKy.push(event.key);}
   }
    characterPr.innerHTML = keysDwnKy.join( " + ");
  
@@ -68,15 +68,15 @@ document.addEventListener('keyup', (e) => {
   document.getElementById('k'+ namKy2).style.backgroundColor = '#555'; 
   let indNmKy = keysDwn.indexOf(namKy2);
   let indNmKy2 = keysDwn.indexOf(e.key);
-   keysDwn.splice(indNmKy, 1); 
+  if (e.key == ' ' ) {indNmKy2 = keysDwn.indexOf('Space');}
+  keysDwn.splice(indNmKy, 1); 
   keysDwnKy.splice(indNmKy2, 1); 
+
+  
    characterPr.innerHTML = keysDwnKy.join( " + ");
   }, timeout = 100);
   
 });
-
-
-
 
 
 
@@ -290,7 +290,9 @@ if (keysDwn.length >  0) {
 });
 }
 
-
+function geBy(pr) {
+  return document.getElementById(pr);
+}
 
 
 
