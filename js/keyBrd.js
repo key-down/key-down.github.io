@@ -118,8 +118,7 @@ let evKy = e.key
   }
 
   if (namKy2.indexOf('CapsLock') == -1 && 
-      namKy2.indexOf('NumLock') == -1 && 
-      namKy2.indexOf('ScrollLock') == -1 ) {
+      namKy2.indexOf('NumLock')  == -1 ) {
     document.getElementById('k'+ namKy2).style.backgroundColor = '#555';
     let indNmKy = keysDwn.indexOf(namKy2);
     let indNmKy2 = keysDwn.indexOf(evKy);
@@ -165,8 +164,8 @@ function changeKeyboardLanguage(ev) {
 
   // تحديث اللغة في القائمة المنسدلة
   if (ev !==  'init') {
-    gmfs('Fn');gmfs('CapsLock');gmfs('NumLock');gmfs('ScrollLock');
-    gmfs('ControlLeft');gmfs('ControlRight');gmfs('AltLeft');
+    gmfs('Fn');gmfs('CapsLock');gmfs('NumLock');/* gmfs('ScrollLock');
+    gmfs('ControlLeft');gmfs('ControlRight');gmfs('AltLeft'); */
 
     if(ev.getModifierState('CapsLock') && kybrdLng.indexOf('shft') == -1) {
     kybrdLng = 'shft' + kybrdLng;
