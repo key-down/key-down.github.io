@@ -1,92 +1,104 @@
-﻿body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+﻿:root {
+    --mnCl: #0289f5;
+    --main-color:#ddd;
+    --mnClOp: #2196f3c2;
+    --gr: #028679;
+    --animation: ;
+}
+/* File: style/style.css */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 20px;
+	background-color: #f4f4f4;
+	color: #333;
 }
 
 .container {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center; */
-    max-width: 900px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-width: 900px;
+	margin: 20px auto;
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.container img {
+ max-width: 27px;
+    margin: 0 0 -10px;
+    cursor: pointer;
 }
 #keyboardId {
-        display: flex
-;
-    justify-content: center;
-    flex-flow: column;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	flex-flow: column;
+	align-items: center;
 }
 h1 {
-    text-align: center;
-    color: #0056b3;
-    margin-bottom: 30px;
+	text-align: center;
+	color: #0056b3;
+	margin-bottom: 30px;
 }
 
 p {
-    margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 #keyboardInput {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 16px;
 }
 .char {
-    height: 40px;
-    margin: 0 0 20px;
-    text-align: center;
-    font-size: 35px;
-    letter-spacing: 2px;
-    font-weight: bold;
-    color: #0f5b0f;
+	height: 40px;
+	margin: 0 0 20px;
+	text-align: center;
+	font-size: 35px;
+	letter-spacing: 2px;
+	font-weight: bold;
+	color: #0f5b0f;
 }
 
 .table-container {
-    margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 15px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
+table,
+th,
+td {
+	border: 1px solid #ddd;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+th,
+td {
+	padding: 10px;
+	text-align: left;
 }
 
 th {
-    background-color: #f2f2f2;
-    font-weight: bold;
+	background-color: #f2f2f2;
+	font-weight: bold;
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+	background-color: #f9f9f9;
 }
-#character{
-    color: green;
-    font-size: 25px;
-    font-weight: bold;
+#character {
+	color: green;
+	font-size: 25px;
+	font-weight: bold;
 }
 
-.log-container {
+/* .log-container {
     border: 1px solid #eee;
     padding: 15px;
     background-color: #fdfdfd;
@@ -95,5 +107,79 @@ tr:nth-child(even) {
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
     line-height: 1.6;
-    white-space: pre-wrap; /* Préserve les retours à la ligne */
+    white-space: pre-wrap; 
+} */
+
+/* bubub */
+
+#cntnr {
+	display: flex;
+	position: fixed;
+	background-color: #7473739e;
+	width: 100%;
+	height: 100%;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: center;
+	background-size: cover;
+	top: 0;
+	right: 0;
+	z-index: 1000;
+}
+
+.dvPlc {
+	width: 50%;
+	position: relative;
+	background-color: #fff;
+	border-radius: 7px;
+	text-align: center;
+	overflow-y: visible;
+	cursor: auto;
+	border: 3px solid var(--gr);
+	transform: scaleY(1);
+	transition: 0.3s;
+	z-index: 2;
+}
+
+.opPlc {
+	transform: scaleY(1);
+}
+
+.divCng {
+	font-size: 35px;
+	padding: 30px;
+	border-radius: 0 0 7px 7px;
+	font-weight: bold;
+}
+
+.divCng span {
+	color: var(--gr);
+    
+}
+#langSlct{
+    width: 80%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--gr);
+    background-color: var(--mnClOp);
+    font-size: 16px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.okbtn {
+    color: white;
+    width: 90px;
+    font-size: 4vh;
+    background: var(--mnCl);
+    margin: 20px auto 10px;
+    padding: 5px 20px;
+    border: 1px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+}
+.inactive {
+    background-color: #999  !important;
+  cursor: not-allowed !important;
 }

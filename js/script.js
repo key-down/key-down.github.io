@@ -52,6 +52,7 @@ e.preventDefault();
     });
 
     document.addEventListener('keypress', (e) => {
+        e.preventDefault();
         // keypress n'a pas toujours un keyCode fiable, charCode est plus pertinent
         // C'est souvent l'événement qui renvoie le "caractère"
         kpKeyCode.textContent = e.key || '-';
@@ -67,6 +68,7 @@ e.preventDefault();
         updateCommonProperties(e);
         logEvent(e);
         resetTableCells('keyup');
+        
     });
 
     function updateCommonProperties(e) {

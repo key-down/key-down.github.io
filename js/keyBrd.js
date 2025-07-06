@@ -1,4 +1,5 @@
 kybrdLng = "en"; // اللغة الافتراضية للوحة المفاتيح
+chngKyBrd = false; // متغير لتحديد ما إذا كان يجب تغيير اللغة
 const characterPr = document.getElementById('characterPr');
 let keysDwn =[];
 let keysDwnKy =[];
@@ -12,69 +13,126 @@ let lngs = {
 
   shften: [ "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", "ShiftRight", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←", "↓", "→", "↑", "NumLock", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ".", "Enter","~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")","_","+","PageDown" ],
   
-  fr: [ "a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "^", "$", "*", "q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "ù",  "w", "x", "c", "v", "b", "n", ",", ";", ":", "!", "Shift", "Ctrl", "Win", "AltLeft", "Space", "ControlLeft", "Fn", "Ctrl", "←", "↓", "→", "↑", "VerrNum", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ",", "Enter","²", "&", "é", "\"", "'", "(", "-", "è", "_", "ç", "à",")","=" ,"Pg suiv"],
+  fr: [ "a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "^", "$", "*", "q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "ù",  "w", "x", "c", "v", "b", "n", ",", ";", ":", "!", "Shift", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←", "↓", "→", "↑", "VerrNum", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ",", "Enter","²", "&", "é", "\"", "'", "(", "-", "è", "_", "ç", "à",")","=" ,"Pg suiv"],
   
-  shftfr: [ "A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "¨", "£", "µ", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "%",  "W", "X", "C", "V", "B", "N", "?", ".", "/", "§", "Shift", "Ctrl", "Win", "AltLeft", "Space", "ControlLeft", "Fn", "Ctrl", "←", "↓", "→", "↑", "VerrNum", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ",", "Enter", "²", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0","-","=","Pg suiv"]};
+  shftfr: [ "A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "¨", "£", "µ", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "%",  "W", "X", "C", "V", "B", "N", "?", ".", "/", "§", "Shift", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←", "↓", "→", "↑", "VerrNum", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ",", "Enter", "²", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0","-","=","Pg suiv"],
+
+  cAltfr : [ "a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "^", "$", "*", "q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "ù",  "w", "x", "c", "v", "b", "n", ",", ";", ":", "!", "Shift", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←", "↓", "→", "↑", "VerrNum", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ",", "Enter","", "&", "Dead", "#", "{", "[", "|", "`", "\\", "^", "@","]","}" ,"Pg suiv"],
+  cAltar :[]
+};
+
+lngs.cAltar = lngs.ar;
+lngs.cAlten = lngs.en;
+
+
 
   
 
 
 document.addEventListener("keydown", function (event) {
   let namKy = event.code; 
+  let evntKy = event.key; 
+  //console.log(evntKy);
   
-	// في لوحة QWERTY الإنجليزية: event.code 'KeyQ' → event.key 'q'
-	// في لوحة AZERTY الفرنسية: event.code 'KeyQ' → event.key 'a'
-  if (event.code.includes("Key") ) {
-    namKy = namKy.slice(3).toLowerCase() // الحصول على اسم المفتاح بدون "Key" 
-	
+   if (event.code.includes("Key") ) {
+    namKy = namKy.replace('Key', '').toLowerCase() // الحصول على اسم المفتاح بدون "Key" 
   }
+   
+/*   namKy = namKy.replace('Digit', ''); 
+  namKy = namKy.replace('Numpad', '');  */
 
- if(namKy.indexOf('Shift') > -1 && kybrdLng.indexOf('shft') == -1) {
-  kybrdLng= 'shft'+kybrdLng;
-  changeKeyboardLanguage()}
-  
-	if ( event.key.toLowerCase() != document.getElementById('k'+ namKy).textContent.toLowerCase()){
-		if (lngs.ar.indexOf(event.key) !== -1 && lngs.ar.indexOf(event.key) < 30) {
-			kybrdLng = "ar";
-		} else if (geBy('kq').innerHTML.toLowerCase() == 'q' && event.key.toLowerCase() == 'a') {
-			kybrdLng = "fr";
-		}else{ kybrdLng = "en";}
-     if(keysDwnKy.indexOf('Shift') > -1 && kybrdLng.indexOf('shft') == -1) {kybrdLng= 'shft'+kybrdLng;}
-    changeKeyboardLanguage()
-	}
-  
+
+
+
+
+  let indTxtfr = lngs.fr.indexOf(evntKy);
+  let indTxtar = lngs.ar.indexOf(evntKy);
+  let indTxten = lngs.en.indexOf(evntKy);
+
+ /*  if ( evntKy.toLowerCase() != geBy('k'+ namKy).textContent.toLowerCase() 
+    && (evntKy.indexOf('AltGraph') == -1 && evntKy.indexOf('Control') == -1)) {
+      if (indTxtar > -1) {
+        kybrdLng = "ar";
+        geBy('idImg').src = 'imgs/arFlag.png';
+      } else if (indTxten != indTxtfr && indTxtfr > -1) {
+        kybrdLng = "fr";
+        geBy('idImg').src = 'imgs/frFlag.png';
+      }else{ kybrdLng = "en";geBy('idImg').src = 'imgs/enFlag.png';}
+      
+      chngKyBrd = true;
+  } */
+  if(keysDwnKy.indexOf('Shift') > -1  && kybrdLng.indexOf('shft') == -1 ) {kybrdLng= 'shft'+kybrdLng;}
+  if((namKy.indexOf('Shift') > -1 || namKy.indexOf('CapsLock') > -1) && kybrdLng.indexOf('shft') == -1) {
+    kybrdLng= 'shft'+kybrdLng;
+    chngKyBrd = true;
+  }
+  if(evntKy.indexOf('AltGraph') > -1 && kybrdLng.indexOf('cAlt') == -1) {
+    kybrdLng= 'cAlt'+kybrdLng;
+    chngKyBrd = true;
+  }
+ 
+  if (chngKyBrd) {
+    changeKeyboardLanguage(event);
+    chngKyBrd = false;
+  }
    if (keysDwn.indexOf(namKy) == -1) {
     keysDwn.push(namKy);
-    if (event.key == ' ') {keysDwnKy.push('Space')}
-    else{keysDwnKy.push(event.key);}
+    if (evntKy == ' ') {evntKy == 'Space'};
+    keysDwnKy.push(evntKy);
   }
    characterPr.innerHTML = keysDwnKy.join( " + ");
  
   document.getElementById('k'+ namKy).style.backgroundColor = '#17a2a9';
+  
 });
 
-document.addEventListener('keyup', (e) => {
 
+
+
+document.addEventListener('keyup', (e) => {
+e.preventDefault();
+let evKy = e.key
   setTimeout(() => {
-    if(e.key.indexOf('Shift') > -1) {kybrdLng = kybrdLng.replace('shft', '');
-     changeKeyboardLanguage();}
-    
+    if(evKy.indexOf('Shift') > -1 ) {kybrdLng = kybrdLng.replace('shft', '');chngKyBrd = true;}
+/*   if(evKy.indexOf('AltGraph') > -1 && keysDwn.indexOf('ControlLeft') > -1) {
+    kybrdLng = kybrdLng.replace('cAlt', '');
+    chngKyBrd = true;
+  } */
+ 
    let namKy2 = e.code;
    
-  if (e.code.includes("Key") ) {
-    namKy2 = namKy2.slice(3).toLowerCase() 
+   
+   if (e.code.includes("Key") ) {
+    namKy2 = namKy2.replace('Key', '').toLowerCase() 
+  }
+   //  console.log(namKy2);
+     
+   if (namKy2.indexOf('AltRight') > -1 ) {
+    kybrdLng = kybrdLng.replace('cAlt', '');  
+    chngKyBrd = true;
   }
   
-  document.getElementById('k'+ namKy2).style.backgroundColor = '#555'; 
-  let indNmKy = keysDwn.indexOf(namKy2);
-  let indNmKy2 = keysDwn.indexOf(e.key);
-  if (e.key == ' ' ) {indNmKy2 = keysDwn.indexOf('Space');}
+   if (chngKyBrd|| namKy2.indexOf('CapsLock') == -1 ||namKy2.indexOf('NumLock')) {
+    changeKeyboardLanguage(e);
+    chngKyBrd = false;
+  }
+
+  if (namKy2.indexOf('CapsLock') == -1 && 
+      namKy2.indexOf('NumLock') == -1 && 
+      namKy2.indexOf('ScrollLock') == -1 ) {
+    document.getElementById('k'+ namKy2).style.backgroundColor = '#555';
+    let indNmKy = keysDwn.indexOf(namKy2);
+    let indNmKy2 = keysDwn.indexOf(evKy);
+  if (evKy == ' ' ) {indNmKy2 = keysDwn.indexOf('Space');}
   keysDwn.splice(indNmKy, 1); 
   keysDwnKy.splice(indNmKy2, 1); 
-
+   
+  }
+ 
+characterPr.innerHTML = keysDwnKy.join( " + ");
   
-   characterPr.innerHTML = keysDwnKy.join( " + ");
   }, timeout = 100);
+   
   
 });
 
@@ -101,183 +159,214 @@ let menuSvg = '<svg height="20px" version="1.1" id="_x32_" xmlns="http://www.w3.
 
 
 
+changeKeyboardLanguage('init');
+function changeKeyboardLanguage(ev) {
 
 
-changeKeyboardLanguage()
-function changeKeyboardLanguage() {
+  // تحديث اللغة في القائمة المنسدلة
+  if (ev !==  'init') {
+    gmfs('Fn');gmfs('CapsLock');gmfs('NumLock');gmfs('ScrollLock');
+    gmfs('ControlLeft');gmfs('ControlRight');gmfs('AltLeft');
+
+    if(ev.getModifierState('CapsLock') && kybrdLng.indexOf('shft') == -1) {
+    kybrdLng = 'shft' + kybrdLng;
+  }else if (!ev.getModifierState('CapsLock') && kybrdLng.indexOf('shft') > -1 && ev.key == 'CapsLock') {
+    kybrdLng =  kybrdLng.replace('shft', '');
+  }
+
+    function gmfs(ky){
+      if(ev.getModifierState(ky) && keysDwn.indexOf(ky) == -1){
+        keysDwn.push(ky);
+        keysDwnKy.push(ky)
+      }else if (!ev.getModifierState(ky) && keysDwn.indexOf(ky) > -1 && ev.code == ky) {
+        let indKy = keysDwn.indexOf(ky);
+        keysDwn.splice(indKy, 1);
+        let indKy2 = keysDwnKy.indexOf(ky);
+        keysDwnKy.splice(indKy2, 1)
+      }
+    }
+  }
   
-  
-document.getElementById("keyboardId").innerHTML = `
-<div  class="keyboard-desktop">
-  <div class="main-keyboard">
-    <div class="keyboard-row">
-      <button class="key" id="kEscape">Esc</button>
-      <button class="key function-key" id="kF1">F1</button>
-      <button class="key function-key" id="kF2">F2</button>
-      <button class="key function-key" id="kF3">F3</button>
-      <button class="key function-key" id="kF4">F4</button>
-      <span class="spacer"></span>
-      <button class="key function-key" id="kF5">F5</button>
-      <button class="key function-key" id="kF6">F6</button>
-      <button class="key function-key" id="kF7">F7</button>
-      <button class="key function-key" id="kF8">F8</button>
-      <span class="spacer"></span>
-      <button class="key function-key" id="kF9">F9</button>
-      <button class="key function-key" id="kF10">F10</button>
-      <button class="key function-key" id="kF11">F11</button>
-      <button class="key function-key" id="kF12">F12</button>
-      <span class="spacer "></span>
-      <button class="key utility-key" id="kPrintScreen">PrtSc</button>
-      <button class="key utility-key" id="kScrollLock">ScrlLck</button>
-      <button class="key utility-key" id="kPauseBreak">Pause</button>
-    </div>
-    <div class="keyboard-row">
-      <button class="key" id="kBackquote">${lngs[kybrdLng][63]}</button>
-      <button class="key" id="kDigit1">${lngs[kybrdLng][64]}</button>
-      <button class="key" id="kDigit2">${lngs[kybrdLng][65]}</button>
-      <button class="key" id="kDigit3">${lngs[kybrdLng][66]}</button>
-      <button class="key" id="kDigit4">${lngs[kybrdLng][67]}</button>
-      <button class="key" id="kDigit5">${lngs[kybrdLng][68]}</button>
-      <button class="key" id="kDigit6">${lngs[kybrdLng][69]}</button>
-      <button class="key" id="kDigit7">${lngs[kybrdLng][70]}</button>
-      <button class="key" id="kDigit8">${lngs[kybrdLng][71]}</button>
-      <button class="key" id="kDigit9">${lngs[kybrdLng][72]}</button>
-      <button class="key" id="kDigit0">${lngs[kybrdLng][73]}</button>
-      <button class="key" id="kMinus">${lngs[kybrdLng][74]}</button>
-      <button class="key" id="kEqual">${lngs[kybrdLng][75]}</button>
-      <button class="key backspace-key" id="kBackspace">Backspace ←</button>
-      <span class="spacer large"></span>
-      <button class="key nav-key" id="kInsert">Ins</button>
-      <button class="key nav-key" id="kHome">Home</button>
-      <button class="key nav-key" id="kPageUp">PgUp</button>
-      </div>
-       <div class="keyboard-row">
-          <button class="key tab-key" id="kTab">Tab</button>
-          <button class="key" id="k${lngs.en[0]}">${lngs[kybrdLng][0]}</button>
-          <button class="key" id="k${lngs.en[1]}">${lngs[kybrdLng][1]}</button>
-          <button class="key" id="k${lngs.en[2]}">${lngs[kybrdLng][2]}</button>
-          <button class="key" id="k${lngs.en[3]}">${lngs[kybrdLng][3]}</button>
-          <button class="key" id="k${lngs.en[4]}">${lngs[kybrdLng][4]}</button>
-          <button class="key" id="k${lngs.en[5]}">${lngs[kybrdLng][5]}</button>
-          <button class="key" id="k${lngs.en[6]}">${lngs[kybrdLng][6]}</button>
-          <button class="key" id="k${lngs.en[7]}">${lngs[kybrdLng][7]}</button>
-          <button class="key" id="k${lngs.en[8]}">${lngs[kybrdLng][8]}</button>
-          <button class="key" id="k${lngs.en[9]}">${lngs[kybrdLng][9]}</button>
-          <button class="key" id="kBracketLeft">${lngs[kybrdLng][10]}</button>
-          <button class="key" id="kBracketRight">${lngs[kybrdLng][11]}</button>
-          <button class="key backslash-key" id="kBackslash">${lngs[kybrdLng][12]}</button>
-          <span class="spacer large"></span>  
-          <button class="key nav-key" id="kDelete">Del</button>
-          <button class="key nav-key" id="kEnd">End</button>
-          <button class="key nav-key" id="kPageDown">PgDn</button>
+
+  document.getElementById("keyboardId").innerHTML = `
+    <div  class="keyboard-desktop">
+      <div class="main-keyboard">
+        <div class="keyboard-row">
+          <button class="key" id="kEscape">Esc</button>
+          <button class="key function-key" id="kF1">F1</button>
+          <button class="key function-key" id="kF2">F2</button>
+          <button class="key function-key" id="kF3">F3</button>
+          <button class="key function-key" id="kF4">F4</button>
+          <span class="spacer"></span>
+          <button class="key function-key" id="kF5">F5</button>
+          <button class="key function-key" id="kF6">F6</button>
+          <button class="key function-key" id="kF7">F7</button>
+          <button class="key function-key" id="kF8">F8</button>
+          <span class="spacer"></span>
+          <button class="key function-key" id="kF9">F9</button>
+          <button class="key function-key" id="kF10">F10</button>
+          <button class="key function-key" id="kF11">F11</button>
+          <button class="key function-key" id="kF12">F12</button>
+          <span class="spacer "></span>
+          <button class="key utility-key" id="kPrintScreen">PrtSc</button>
+          <button class="key utility-key" id="kScrollLock">ScrlLck</button>
+          <button class="key utility-key" id="kPauseBreak">Pause</button>
         </div>
+        <div class="keyboard-row">
+          <button class="key" id="kBackquote">${lngs[kybrdLng][63]}</button>
+          <button class="key" id="kDigit1">${lngs[kybrdLng][64]}</button>
+          <button class="key" id="kDigit2">${lngs[kybrdLng][65]}</button>
+          <button class="key" id="kDigit3">${lngs[kybrdLng][66]}</button>
+          <button class="key" id="kDigit4">${lngs[kybrdLng][67]}</button>
+          <button class="key" id="kDigit5">${lngs[kybrdLng][68]}</button>
+          <button class="key" id="kDigit6">${lngs[kybrdLng][69]}</button>
+          <button class="key" id="kDigit7">${lngs[kybrdLng][70]}</button>
+          <button class="key" id="kDigit8">${lngs[kybrdLng][71]}</button>
+          <button class="key" id="kDigit9">${lngs[kybrdLng][72]}</button>
+          <button class="key" id="kDigit0">${lngs[kybrdLng][73]}</button>
+          <button class="key" id="kMinus">${lngs[kybrdLng][74]}</button>
+          <button class="key" id="kEqual">${lngs[kybrdLng][75]}</button>
+          <button class="key backspace-key" id="kBackspace">Backspace ←</button>
+          <span class="spacer large"></span>
+          <button class="key nav-key" id="kInsert">Ins</button>
+          <button class="key nav-key" id="kHome">Home</button>
+          <button class="key nav-key" id="kPageUp">PgUp</button>
+          </div>
+          <div class="keyboard-row">
+              <button class="key tab-key" id="kTab">Tab</button>
+              <button class="key" id="k${lngs.en[0]}">${lngs[kybrdLng][0]}</button>
+              <button class="key" id="k${lngs.en[1]}">${lngs[kybrdLng][1]}</button>
+              <button class="key" id="k${lngs.en[2]}">${lngs[kybrdLng][2]}</button>
+              <button class="key" id="k${lngs.en[3]}">${lngs[kybrdLng][3]}</button>
+              <button class="key" id="k${lngs.en[4]}">${lngs[kybrdLng][4]}</button>
+              <button class="key" id="k${lngs.en[5]}">${lngs[kybrdLng][5]}</button>
+              <button class="key" id="k${lngs.en[6]}">${lngs[kybrdLng][6]}</button>
+              <button class="key" id="k${lngs.en[7]}">${lngs[kybrdLng][7]}</button>
+              <button class="key" id="k${lngs.en[8]}">${lngs[kybrdLng][8]}</button>
+              <button class="key" id="k${lngs.en[9]}">${lngs[kybrdLng][9]}</button>
+              <button class="key" id="kBracketLeft">${lngs[kybrdLng][10]}</button>
+              <button class="key" id="kBracketRight">${lngs[kybrdLng][11]}</button>
+              <button class="key backslash-key" id="kBackslash">${lngs[kybrdLng][12]}</button>
+              <span class="spacer large"></span>  
+              <button class="key nav-key" id="kDelete">Del</button>
+              <button class="key nav-key" id="kEnd">End</button>
+              <button class="key nav-key" id="kPageDown">PgDn</button>
+            </div>
 
-    <div class="keyboard-row">
-      <button class="key caps-key" id="kCapsLock">Caps Lock</button>
-      <button class="key" id="k${lngs.en[13]}">${lngs[kybrdLng][13]}</button>
-      <button class="key" id="k${lngs.en[14]}">${lngs[kybrdLng][14]}</button>
-      <button class="key" id="k${lngs.en[15]}">${lngs[kybrdLng][15]}</button>
-      <button class="key" id="k${lngs.en[16]}">${lngs[kybrdLng][16]}</button>
-      <button class="key" id="k${lngs.en[17]}">${lngs[kybrdLng][17]}</button>
-      <button class="key" id="k${lngs.en[18]}">${lngs[kybrdLng][18]}</button>
-      <button class="key" id="k${lngs.en[19]}">${lngs[kybrdLng][19]}</button>
-      <button class="key" id="k${lngs.en[20]}">${lngs[kybrdLng][20]}</button>
-      <button class="key" id="k${lngs.en[21]}">${lngs[kybrdLng][21]}</button>
-      <button class="key" id="kSemicolon">${lngs[kybrdLng][22]}</button>
-      <button class="key" id="kQuote">${lngs[kybrdLng][23]}</button>      
-      <button class="key enter-key" id="kEnter">Enter</button>
-    </div>  
-    <div class="keyboard-row">
-      <button class="key shift-key left" id="kShiftLeft">Shift</button>
-      <button class="key" id="k${lngs.en[24]}">${lngs[kybrdLng][24]}</button>
-      <button class="key" id="k${lngs.en[25]}">${lngs[kybrdLng][25]}</button>
-      <button class="key" id="k${lngs.en[26]}">${lngs[kybrdLng][26]}</button>
-      <button class="key" id="k${lngs.en[27]}">${lngs[kybrdLng][27]}</button>
-      <button class="key" id="k${lngs.en[28]}">${lngs[kybrdLng][28]}</button>
-      <button class="key" id="k${lngs.en[29]}">${lngs[kybrdLng][29]}</button>
-      <button class="key" id="k${lngs.en[30]}">${lngs[kybrdLng][30]}</button>
-      <button class="key" id="kComma">${lngs[kybrdLng][31]}</button>
-      <button class="key" id="kPeriod">${lngs[kybrdLng][32]}</button>
-      <button class="key" id="kSlash">${lngs[kybrdLng][33]}</button>
-      <button class="key shift-key right" id="kShiftRight">Shift</button>
-      <span class="spacer large"></span>
-      <div class="arrow-keys-block">
-        <button class="key arrow-key empty"></button><!-- 
-        <button class="key arrow-key empty"></button> -->
-        <button class="key arrow-key" id="kArrowUp">▲</button>
+        <div class="keyboard-row">
+          <button class="key caps-key" id="kCapsLock">Caps Lock</button>
+          <button class="key" id="k${lngs.en[13]}">${lngs[kybrdLng][13]}</button>
+          <button class="key" id="k${lngs.en[14]}">${lngs[kybrdLng][14]}</button>
+          <button class="key" id="k${lngs.en[15]}">${lngs[kybrdLng][15]}</button>
+          <button class="key" id="k${lngs.en[16]}">${lngs[kybrdLng][16]}</button>
+          <button class="key" id="k${lngs.en[17]}">${lngs[kybrdLng][17]}</button>
+          <button class="key" id="k${lngs.en[18]}">${lngs[kybrdLng][18]}</button>
+          <button class="key" id="k${lngs.en[19]}">${lngs[kybrdLng][19]}</button>
+          <button class="key" id="k${lngs.en[20]}">${lngs[kybrdLng][20]}</button>
+          <button class="key" id="k${lngs.en[21]}">${lngs[kybrdLng][21]}</button>
+          <button class="key" id="kSemicolon">${lngs[kybrdLng][22]}</button>
+          <button class="key" id="kQuote">${lngs[kybrdLng][23]}</button>      
+          <button class="key enter-key" id="kEnter">Enter</button>
+        </div>  
+        <div class="keyboard-row">
+          <button class="key shift-key left" id="kShiftLeft">Shift</button>
+          <button class="key" id="k${lngs.en[24]}">${lngs[kybrdLng][24]}</button>
+          <button class="key" id="k${lngs.en[25]}">${lngs[kybrdLng][25]}</button>
+          <button class="key" id="k${lngs.en[26]}">${lngs[kybrdLng][26]}</button>
+          <button class="key" id="k${lngs.en[27]}">${lngs[kybrdLng][27]}</button>
+          <button class="key" id="k${lngs.en[28]}">${lngs[kybrdLng][28]}</button>
+          <button class="key" id="k${lngs.en[29]}">${lngs[kybrdLng][29]}</button>
+          <button class="key" id="k${lngs.en[30]}">${lngs[kybrdLng][30]}</button>
+          <button class="key" id="kComma">${lngs[kybrdLng][31]}</button>
+          <button class="key" id="kPeriod">${lngs[kybrdLng][32]}</button>
+          <button class="key" id="kSlash">${lngs[kybrdLng][33]}</button>
+          <button class="key shift-key right" id="kShiftRight">Shift</button>
+          <span class="spacer large"></span>
+          <div class="arrow-keys-block">
+            <button class="key arrow-key empty"></button><!-- 
+            <button class="key arrow-key empty"></button> -->
+            <button class="key arrow-key" id="kArrowUp">▲</button>
+          </div>
+        </div>
+        <div class="keyboard-row">
+          <button class="key ctrl-key" id="kControlLeft">Ctrl</button>
+          <button class="key fn-key" id="kFn">Fn</button>
+          <button class="key win-key" id="kMetaLeft">
+          <svg xmlns="http://www.w3.org/2000/svg" height= "17px" fill="#78f5e2" viewBox="0 0 448 512">
+             <path  d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/> 
+          </svg> 
+          Win </button>
+          
+          <button class="key" id="k${lngs.en[37]}">alt</button>
+          <button class="key space-key" id="kSpace">Space</button>
+          <button class="key" id="k${lngs.en[39]}">alt</button>
+          <button class="key fn-key" id="kContextMenu">${menuSvg}</button>
+          <button class="key ctrl-key" id="kControlRight">Ctrl</button>
+          <span class="spacer large"></span>
+          <div class="arrow-keys-block">
+            <button class="key arrow-key" id="kArrowLeft">◀</button>
+            <button class="key arrow-key" id="kArrowDown">▼</button>  
+            <button class="key arrow-key" id="kArrowRight">▶</button>
+          </div>
+        </div>
+      </div>
+      <div class="numpad">
+        <div class="lftdv">
+          <div class="keyboard-row">
+            <button class="key numpad-key" id="kNumLock">Num Lock</button>
+            <button class="key numpad-key" id="kNumpadDivide">/</button>
+            <button class="key numpad-key" id="kNumpadMultiply">*</button>
+          </div>
+          <div class="keyboard-row">
+            <button class="key numpad-key" id="kNumpad7">7</button>
+            <button class="key numpad-key" id="kNumpad8">8</button>
+            <button class="key numpad-key" id="kNumpad9">9</button>
+          </div>
+          <div class="keyboard-row">
+            <button class="key numpad-key" id="kNumpad4">4</button>
+            <button class="key numpad-key" id="kNumpad5">5</button>
+            <button class="key numpad-key" id="kNumpad6">6</button>
+          </div>
+          <div class="keyboard-row">
+            <button class="key numpad-key" id="kNumpad1">1</button>
+            <button class="key numpad-key" id="kNumpad2">2</button>
+            <button class="key numpad-key" id="kNumpad3">3</button>
+          </div>
+          <div class="keyboard-row">
+            <button class="key numpad-key double-width" id="kNumpad0">0</button>
+            <button class="key numpad-key" id="kNumpadDecimal">.</button>
+          </div>
+        </div>
+        <div class="rghtDv">
+          <button class="key numpad-key" id="kNumpadSubtract">-</button>
+          <button class="key numpad-key tall" id="kNumpadAdd">+</button>
+          <button class="key numpad-key tall" id="kNumpadEnter">Enter</button>
+        </div>
       </div>
     </div>
-    <div class="keyboard-row">
-      <button class="key ctrl-key" id="kControlLeft">Ctrl</button>
-      <button class="key fn-key" id="kFn">Fn</button>
-      <button class="key win-key" id="kMetaLeft">
-      <svg xmlns="http://www.w3.org/2000/svg"     height= "17px" fill="#78f5e2" viewBox="0 0 448 512"><path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/> </svg> 
-       Win </button>
-       
-      <button class="key" id="k${lngs.en[37]}">alt</button>
-      <button class="key space-key" id="kSpace">Space</button>
-      <button class="key" id="k${lngs.en[39]}">alt</button>
-      <button class="key fn-key" id="kContextMenu">${menuSvg}</button>
-      <button class="key ctrl-key" id="kControlRight">Ctrl</button>
-      <span class="spacer large"></span>
-      <div class="arrow-keys-block">
-        <button class="key arrow-key" id="kArrowLeft">◀</button>
-        <button class="key arrow-key" id="kArrowDown">▼</button>  
-        <button class="key arrow-key" id="kArrowRight">▶</button>
-      </div>
-    </div>
-  </div>
-  <div class="numpad">
-    <div class="lftdv">
-      <div class="keyboard-row">
-        <button class="key numpad-key" id="kNumLock">Num Lock</button>
-        <button class="key numpad-key" id="kNumpadDivide">/</button>
-        <button class="key numpad-key" id="kNumpadMultiply">*</button>
-      </div>
-      <div class="keyboard-row">
-        <button class="key numpad-key" id="kNumpad7">7</button>
-        <button class="key numpad-key" id="kNumpad8">8</button>
-        <button class="key numpad-key" id="kNumpad9">9</button>
-      </div>
-      <div class="keyboard-row">
-        <button class="key numpad-key" id="kNumpad4">4</button>
-        <button class="key numpad-key" id="kNumpad5">5</button>
-        <button class="key numpad-key" id="kNumpad6">6</button>
-      </div>
-      <div class="keyboard-row">
-        <button class="key numpad-key" id="kNumpad1">1</button>
-        <button class="key numpad-key" id="kNumpad2">2</button>
-        <button class="key numpad-key" id="kNumpad3">3</button>
-      </div>
-      <div class="keyboard-row">
-        <button class="key numpad-key double-width" id="kNumpad0">0</button>
-        <button class="key numpad-key" id="kNumpadDecimal">.</button>
-      </div>
-    </div>
-    <div class="rghtDv">
-      <button class="key numpad-key" id="kNumpadSubtract">-</button>
-      <button class="key numpad-key tall" id="kNumpadAdd">+</button>
-      <button class="key numpad-key tall" id="kNumpadEnter">Enter</button>
-    </div>
-  </div>
-</div>
-`;
+  `;
 
-if (keysDwn.length >  0) {
+
+ 
+ 
+
+
+
+
+
   keysDwn.forEach((key) => {
     document.getElementById('k'+ key).style.backgroundColor = '#17a2a9'; 
   });
-}
+
 
 
 
 
  document.querySelectorAll('.key').forEach((key) => {
   
- key.addEventListener('click', (event)=> {  
+ key.addEventListener('click', ()=> {  
    // الحصول على معرف المفتاح الذي تم النقر عليه
-   let keyId = key.textContent; // عرض اسم المفتاح الذي تم النقر عليه
-   console.log(keyId);
+   let keyId = key.textContent; 
    
    if (keyId.indexOf('.st0{fill:#ffffff;}') > -1) {keyId = 'Context Menu';} 
    if(keyId === "Backspace ←"){keyId = "Backspace"}
@@ -290,9 +379,53 @@ if (keysDwn.length >  0) {
 });
 }
 
-function geBy(pr) {
-  return document.getElementById(pr);
-}
 
 
 
+geBy('langSlct').addEventListener('click', function(ev) {
+
+  
+    let selectedLanguage = document.getElementById('langSlct').value;
+    switch (selectedLanguage) {
+      case 'en':slLng('en'); break;
+      case 'ar':slLng('ar'); break;
+      case 'fr':slLng('fr'); break;
+      default: slLng('en'); break;
+    }
+    geBy('oklng').classList.remove('inactive');
+  function slLng(lng) {
+    kybrdLng = kybrdLng.slice(0, -2)
+    kybrdLng += lng;
+    geBy('idImg').src = `imgs/${lng}Flag.png`;
+  }
+  changeKeyboardLanguage(ev);
+  
+});
+geBy('oklng').addEventListener('click', ()=>{
+  let lstClass = geBy('oklng').classList;
+   lstClass = lstClass.value.split(" ")
+  
+  if (lstClass.indexOf('inactive') == -1) {
+    geBy('cntnr').style.display = 'none'
+  } 
+})
+function geBy(pr) { return document.getElementById(pr)}
+
+
+  geBy('chImg').addEventListener('click',  (ev) => {
+    let selectedLanguage = document.getElementById('langSlct').value;
+    switch (selectedLanguage) {
+      case 'en':chLng('ar'); break;
+      case 'ar':chLng('fr'); break;
+      case 'fr':chLng('en'); break;
+      default: chLng('en'); break;
+    }
+
+     function chLng(lng) {
+    kybrdLng = kybrdLng.slice(0, -2)
+    kybrdLng += lng;
+    document.getElementById('langSlct').value =lng;
+    geBy('idImg').src = `imgs/${lng}Flag.png`;
+  }
+  changeKeyboardLanguage(ev);
+  })

@@ -11,10 +11,13 @@
 	<body>
 		<div class="container">
 			<h1>key down</h1>
-
-			<p>Enter text:</p>
+			
+			<p style="margin-bottom:25px;">Language: 
+				<span id="chImg">
+					<img id="idImg" src="imgs/enFlag.png" alt="en">
+				</span></p>
       <!-- Input text -->
-			<input type="text" id="keyboardInput" />
+			<input type="text" id="keyboardInput"  autofocus/>
 			<div style="display: flex; flex-direction: row; justify-content: center">
 				<span id="characterPr1" class="char"></span>
 				<span style="width: 15px"> </span>
@@ -80,6 +83,35 @@
 
 			<div class="log-container"></div>
 		</div>
+
+
+
+
+
+
+ <!-- Start Bubebe -->
+    <div id="cntnr" class="hidjs" >
+        <div id="divplac" class="dvPlc">
+            <div id="cngrtl" class="divCng hidjs">
+				Select language :
+			<br> 
+			<div class="langDiv">
+				<select name="slct" id="langSlct" style="height: 30px;">
+					<option value="en">english <img src="imgs/enFlag.png" alt="aa"style="height: 15px;"></img></option>
+					<option value="ar">العربية <img src="imgs/arFlag.png" alt="aa"></option>
+					<option value="fr">français <img src="imgs/frFlag.png" alt="aa"></option>
+
+			</select><!-- 
+           		 <hr/> -->
+				 </div>
+             	<input id="oklng" class="okbtn inactive" value="Ok" type="button"></input>
+            
+			</div>
+        </div>
+    </div>
+
+
+
 
 		<script src="js/script.js"></script>
 		<script src="js/keyBrd.js"></script>
