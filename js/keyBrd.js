@@ -399,12 +399,10 @@ geBy('langSlct').addEventListener('click', function(ev) {
     geBy('idImg').src = `imgs/${lng}Flag.png`;
   }
   changeKeyboardLanguage(ev);
-  
 });
 geBy('oklng').addEventListener('click', ()=>{
   let lstClass = geBy('oklng').classList;
-   lstClass = lstClass.value.split(" ")
-  
+   lstClass = lstClass.value.split(" ");
   if (lstClass.indexOf('inactive') == -1) {
     geBy('cntnr').style.display = 'none'
   } 
