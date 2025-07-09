@@ -1,10 +1,11 @@
-kybrdLng = "en"; // اللغة الافتراضية للوحة المفاتيح
-chngKyBrd = false; // متغير لتحديد ما إذا كان يجب تغيير اللغة
-const characterPr = document.getElementById('characterPr');
-let keysDwn =[];
-let keysDwnKy =[];
+let kybrdLng = "en", // اللغة الافتراضية للوحة المفاتيح
+chngKyBrd = false, // متغير لتحديد ما إذا كان يجب تغيير اللغة
+ characterPr = document.getElementById('characterPr'),
+ keysDwn =[],
+ keysDwnKy =[],
+ clr ={CapsLock : "7f817f",NumLock : "7f817f"} ,
 
-let lngs = { 
+ lngs = { 
   ar: [ "ض", "ص", "ث", "ق", "ف", "غ", "ع", "ه", "خ", "ح", "ج", "د","\\", "ش", "س", "ي", "ب", "ل", "ا", "ت", "ن", "م", "ك", "ط", "ئ", "ء", "ؤ", "ر", "لا", "ى", "ة", "و", "ز", "ظ", "↓", "→", "↑", "مفتاح الأرقام", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ".", "Enter", "ShiftRight", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←","ذ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0","-","=","PageDown"], 
 
   shftar: [ "َ", "ً", "ُ", "لإ", "لإ", "إ", "‘", "÷", "×", "؛", "<", ">","|", "ِ", "ٍ", "]", "[", "لأ", "أ", "ـ", "،", "/", ":", "\"", "~", "ْ", "}", "{", "لآ", "آ", "’", ",", ".", "؟", "↓", "→", "↑", "مفتاح الأرقام", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ".", "Enter", "ShiftRight", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←","ّ", "!", "@", "#", "$", "%", "^", "&", "*", ")", "(","_","+","PageDown"], 
@@ -18,11 +19,17 @@ let lngs = {
   shftfr: [ "A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P", "¨", "£", "µ", "Q", "S", "D", "F", "G", "H", "J", "K", "L", "M", "%",  "W", "X", "C", "V", "B", "N", "?", ".", "/", "§", "Shift", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←", "↓", "→", "↑", "VerrNum", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ",", "Enter", "²", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0","-","=","Pg suiv"],
 
   cAltfr : [ "a", "z", "e", "r", "t", "y", "u", "i", "o", "p", "^", "$", "*", "q", "s", "d", "f", "g", "h", "j", "k", "l", "m", "ù",  "w", "x", "c", "v", "b", "n", ",", ";", ":", "!", "Shift", "Ctrl", "Win", "AltLeft", "Space", "AltRight", "Fn", "Ctrl", "←", "↓", "→", "↑", "VerrNum", "/", "*", "7", "8", "9", "-", "4", "5", "6", "+", "1", "2", "3", "0", ",", "Enter","", "&", "Dead", "#", "{", "[", "|", "`", "\\", "^", "@","]","}" ,"Pg suiv"],
-  cAltar :[]
+  cAltar :[],
+  cplcar : [],
+  cplcen:[],
+  cplcfr:[]
 };
 
-lngs.cAltar = lngs.ar;
+lngs.cAltar = lngs.cplcar = lngs.ar;
 lngs.cAlten = lngs.en;
+// lngs.cplcar = lngs.ar,
+lngs.cplcen=lngs.shften;
+lngs.cplcfr=lngs.shftfr;
 
 
 
@@ -30,48 +37,25 @@ lngs.cAlten = lngs.en;
 
 
 document.addEventListener("keydown", function (event) {
+  event.preventDefault()
   let namKy = event.code; 
   let evntKy = event.key; 
-  //console.log(evntKy);
   
    if (event.code.includes("Key") ) {
     namKy = namKy.replace('Key', '').toLowerCase() // الحصول على اسم المفتاح بدون "Key" 
   }
-   
-/*   namKy = namKy.replace('Digit', ''); 
-  namKy = namKy.replace('Numpad', '');  */
 
-
-
-
-
-  let indTxtfr = lngs.fr.indexOf(evntKy);
-  let indTxtar = lngs.ar.indexOf(evntKy);
-  let indTxten = lngs.en.indexOf(evntKy);
-
- /*  if ( evntKy.toLowerCase() != geBy('k'+ namKy).textContent.toLowerCase() 
-    && (evntKy.indexOf('AltGraph') == -1 && evntKy.indexOf('Control') == -1)) {
-      if (indTxtar > -1) {
-        kybrdLng = "ar";
-        geBy('idImg').src = 'imgs/arFlag.png';
-      } else if (indTxten != indTxtfr && indTxtfr > -1) {
-        kybrdLng = "fr";
-        geBy('idImg').src = 'imgs/frFlag.png';
-      }else{ kybrdLng = "en";geBy('idImg').src = 'imgs/enFlag.png';}
-      
-      chngKyBrd = true;
-  } */
-  if(keysDwnKy.indexOf('Shift') > -1  && kybrdLng.indexOf('shft') == -1 ) {kybrdLng= 'shft'+kybrdLng;}
-  if((namKy.indexOf('Shift') > -1 || namKy.indexOf('CapsLock') > -1) && kybrdLng.indexOf('shft') == -1) {
+  if(namKy.indexOf('Shift') > -1  && kybrdLng.indexOf('shft') == -1) {
     kybrdLng= 'shft'+kybrdLng;
     chngKyBrd = true;
   }
-  if(evntKy.indexOf('AltGraph') > -1 && kybrdLng.indexOf('cAlt') == -1) {
+  if(namKy.indexOf('AltRight') > -1 && kybrdLng.indexOf('cAlt') == -1
+      && keysDwn.indexOf('ControlLeft')  > -1) {
     kybrdLng= 'cAlt'+kybrdLng;
     chngKyBrd = true;
   }
  
-  if (chngKyBrd) {
+  if (chngKyBrd || namKy.indexOf('CapsLock') == -1 ||namKy.indexOf('NumLock')) {
     changeKeyboardLanguage(event);
     chngKyBrd = false;
   }
@@ -94,11 +78,11 @@ e.preventDefault();
 let evKy = e.key
   setTimeout(() => {
     if(evKy.indexOf('Shift') > -1 ) {kybrdLng = kybrdLng.replace('shft', '');chngKyBrd = true;}
-/*   if(evKy.indexOf('AltGraph') > -1 && keysDwn.indexOf('ControlLeft') > -1) {
+   /* if(evKy.indexOf('AltGraph') > -1 && keysDwn.indexOf('ControlLeft') > -1) {
     kybrdLng = kybrdLng.replace('cAlt', '');
     chngKyBrd = true;
-  } */
- 
+  }  */
+    
    let namKy2 = e.code;
    
    
@@ -112,13 +96,12 @@ let evKy = e.key
     chngKyBrd = true;
   }
   
-   if (chngKyBrd|| namKy2.indexOf('CapsLock') == -1 ||namKy2.indexOf('NumLock')) {
+   if (chngKyBrd) {
     changeKeyboardLanguage(e);
     chngKyBrd = false;
   }
 
-  if (namKy2.indexOf('CapsLock') == -1 && 
-      namKy2.indexOf('NumLock')  == -1 ) {
+  
     document.getElementById('k'+ namKy2).style.backgroundColor = '#555';
     let indNmKy = keysDwn.indexOf(namKy2);
     let indNmKy2 = keysDwn.indexOf(evKy);
@@ -126,8 +109,8 @@ let evKy = e.key
   keysDwn.splice(indNmKy, 1); 
   keysDwnKy.splice(indNmKy2, 1); 
    
-  }
- 
+  
+  
 characterPr.innerHTML = keysDwnKy.join( " + ");
   
   }, timeout = 100);
@@ -158,38 +141,58 @@ let menuSvg = '<svg height="20px" version="1.1" id="_x32_" xmlns="http://www.w3.
 
 
 
-changeKeyboardLanguage('init');
-function changeKeyboardLanguage(ev) {
 
-
+changeKeyboardLanguage();
+function changeKeyboardLanguage(ev = 'init' ) {
   // تحديث اللغة في القائمة المنسدلة
-  if (ev !==  'init') {
-    gmfs('Fn');gmfs('CapsLock');gmfs('NumLock');/* gmfs('ScrollLock');
-    gmfs('ControlLeft');gmfs('ControlRight');gmfs('AltLeft'); */
+  if (ev !==  'init' && (ev.type == 'click' ||ev.code == 'CapsLock' || ev.code == 'NumLock')) {
+      
 
-    if(ev.getModifierState('CapsLock') && kybrdLng.indexOf('shft') == -1) {
-    kybrdLng = 'shft' + kybrdLng;
-  }else if (!ev.getModifierState('CapsLock') && kybrdLng.indexOf('shft') > -1 && ev.key == 'CapsLock') {
-    kybrdLng =  kybrdLng.replace('shft', '');
-  }
+
+    if(ev.getModifierState('CapsLock') && kybrdLng.indexOf('cplc') == -1 ) {
+    kybrdLng = 'cplc' + kybrdLng;
+    }else if (!ev.getModifierState('CapsLock') /* && ev.code == 'CapsLock' */
+              && kybrdLng.indexOf('cplc')>-1) {
+    kybrdLng =  kybrdLng.replace('cplc', '');
+    }
+
+gmfs('CapsLock');gmfs('NumLock')
 
     function gmfs(ky){
-      if(ev.getModifierState(ky) && keysDwn.indexOf(ky) == -1){
-        keysDwn.push(ky);
-        keysDwnKy.push(ky)
-      }else if (!ev.getModifierState(ky) && keysDwn.indexOf(ky) > -1 && ev.code == ky) {
-        let indKy = keysDwn.indexOf(ky);
-        keysDwn.splice(indKy, 1);
-        let indKy2 = keysDwnKy.indexOf(ky);
-        keysDwnKy.splice(indKy2, 1)
-      }
+      if(ev.getModifierState(ky)) {
+      clr[ky] = '0bff0b'
+      }else if (!ev.getModifierState(ky) ) {
+      clr[ky] = '7f817f'
+      } 
     }
-  }
   
-
+  }
   document.getElementById("keyboardId").innerHTML = `
+    </div>
     <div  class="keyboard-desktop">
+    
       <div class="main-keyboard">
+      <div class="keyboard-row1">
+          <button class="key" ></button>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <span class="spacer"></span>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <span class="spacer"></span>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <button class="key function-key" ></button>
+          <span class="spacer "></span>
+          <button class="sond-key function-key" id="kAudioVolumeDown"> <img src="imgs\\audio-low-svgrepo-com.svg" alt="AudioVolume"></button>
+          <button class="sond-key function-key" id="kAudioVolumeUp"><img src="imgs\\audio-high-svgrepo-com.svg" alt="VolumeUp"></button>
+          <button class="sond-key function-key" id="kAudioVolumeMute"><img src="imgs\\audio-mute-svgrepo-com.svg" alt="Mute"></button> 
+        </div>
         <div class="keyboard-row">
           <button class="key" id="kEscape">Esc</button>
           <button class="key function-key" id="kF1">F1</button>
@@ -289,7 +292,7 @@ function changeKeyboardLanguage(ev) {
         </div>
         <div class="keyboard-row">
           <button class="key ctrl-key" id="kControlLeft">Ctrl</button>
-          <button class="key fn-key" id="kFn">Fn</button>
+          <button class="key fn-key" id="kUnidentified">Fn</button>
           <button class="key win-key" id="kMetaLeft">
           <svg xmlns="http://www.w3.org/2000/svg" height= "17px" fill="#78f5e2" viewBox="0 0 448 512">
              <path  d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/> 
@@ -310,36 +313,52 @@ function changeKeyboardLanguage(ev) {
         </div>
       </div>
       <div class="numpad">
-        <div class="lftdv">
-          <div class="keyboard-row">
-            <button class="key numpad-key" id="kNumLock">Num Lock</button>
-            <button class="key numpad-key" id="kNumpadDivide">/</button>
-            <button class="key numpad-key" id="kNumpadMultiply">*</button>
-          </div>
-          <div class="keyboard-row">
-            <button class="key numpad-key" id="kNumpad7">7</button>
-            <button class="key numpad-key" id="kNumpad8">8</button>
-            <button class="key numpad-key" id="kNumpad9">9</button>
-          </div>
-          <div class="keyboard-row">
-            <button class="key numpad-key" id="kNumpad4">4</button>
-            <button class="key numpad-key" id="kNumpad5">5</button>
-            <button class="key numpad-key" id="kNumpad6">6</button>
-          </div>
-          <div class="keyboard-row">
-            <button class="key numpad-key" id="kNumpad1">1</button>
-            <button class="key numpad-key" id="kNumpad2">2</button>
-            <button class="key numpad-key" id="kNumpad3">3</button>
-          </div>
-          <div class="keyboard-row">
-            <button class="key numpad-key double-width" id="kNumpad0">0</button>
-            <button class="key numpad-key" id="kNumpadDecimal">.</button>
-          </div>
+        <div class="updv">
+            <div class="keyboard-row">
+            <div class="lumb numpad-key" > 1 <span id="NumLockLmp"
+             style="background-color: #${clr.NumLock} ;" 
+             class="check"></span></div>
+
+              <div class="lumb numpad-key" > A <span id="CapsLockLmp"
+              style="background-color: #${clr.CapsLock}  ;" 
+              class="check"></span></div>
+              <button class="rest numpad-key" id="kNumpadDivide"></button>
+              <button class="rest numpad-key" id="kNumpadMultiply"></button>
+          <button class="rest numpad-key" id="kNumpadSubtract"></button>
+            </div>
         </div>
-        <div class="rghtDv">
-          <button class="key numpad-key" id="kNumpadSubtract">-</button>
-          <button class="key numpad-key tall" id="kNumpadAdd">+</button>
-          <button class="key numpad-key tall" id="kNumpadEnter">Enter</button>
+        <div class="dwndv">
+          <div class="lftdv">
+            <div class="keyboard-row">
+              <button class="key numpad-key" id="kNumLock">Num Lock</button>
+              <button class="key numpad-key" id="kNumpadDivide">/</button>
+              <button class="key numpad-key" id="kNumpadMultiply">*</button>
+            </div>
+            <div class="keyboard-row">
+              <button class="key numpad-key" id="kNumpad7">7</button>
+              <button class="key numpad-key" id="kNumpad8">8</button>
+              <button class="key numpad-key" id="kNumpad9">9</button>
+            </div>
+            <div class="keyboard-row">
+              <button class="key numpad-key" id="kNumpad4">4</button>
+              <button class="key numpad-key" id="kNumpad5">5</button>
+              <button class="key numpad-key" id="kNumpad6">6</button>
+            </div>
+            <div class="keyboard-row">
+              <button class="key numpad-key" id="kNumpad1">1</button>
+              <button class="key numpad-key" id="kNumpad2">2</button>
+              <button class="key numpad-key" id="kNumpad3">3</button>
+            </div>
+            <div class="keyboard-row">
+              <button class="key numpad-key double-width" id="kNumpad0">0</button>
+              <button class="key numpad-key" id="kNumpadDecimal">.</button>
+            </div>
+          </div>
+          <div class="rghtDv">
+            <button class="key numpad-key" id="kNumpadSubtract">-</button>
+            <button class="key numpad-key tall" id="kNumpadAdd">+</button>
+            <button class="key numpad-key tall" id="kNumpadEnter">Enter</button>
+          </div>
         </div>
       </div>
     </div>
@@ -364,6 +383,8 @@ function changeKeyboardLanguage(ev) {
  document.querySelectorAll('.key').forEach((key) => {
   
  key.addEventListener('click', ()=> {  
+  
+  
    // الحصول على معرف المفتاح الذي تم النقر عليه
    let keyId = key.textContent; 
    
@@ -383,7 +404,6 @@ function changeKeyboardLanguage(ev) {
 
 geBy('langSlct').addEventListener('click', function(ev) {
 
-  
     let selectedLanguage = document.getElementById('langSlct').value;
     switch (selectedLanguage) {
       case 'en':slLng('en'); break;
@@ -392,19 +412,20 @@ geBy('langSlct').addEventListener('click', function(ev) {
       default: slLng('en'); break;
     }
     geBy('oklng').classList.remove('inactive');
+  changeKeyboardLanguage(ev);
   function slLng(lng) {
     kybrdLng = kybrdLng.slice(0, -2)
     kybrdLng += lng;
     geBy('idImg').src = `imgs/${lng}Flag.png`;
   }
-  changeKeyboardLanguage(ev);
 });
-geBy('oklng').addEventListener('click', ()=>{
+geBy('oklng').addEventListener('click', (ev)=>{
   let lstClass = geBy('oklng').classList;
    lstClass = lstClass.value.split(" ");
   if (lstClass.indexOf('inactive') == -1) {
     geBy('cntnr').style.display = 'none'
   } 
+  changeKeyboardLanguage(ev);
 })
 function geBy(pr) { return document.getElementById(pr)}
 

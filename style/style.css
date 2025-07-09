@@ -15,6 +15,9 @@ body {
 }
 
 .container {
+	display: flex;
+    justify-content: center;
+	flex-direction: column;
 	max-width: 900px;
 	margin: 20px auto;
 	background-color: #fff;
@@ -22,16 +25,10 @@ body {
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.container img {
+.container #idImg {
  max-width: 27px;
     margin: 0 0 -10px;
     cursor: pointer;
-}
-#keyboardId {
-	display: flex;
-	justify-content: center;
-	flex-flow: column;
-	align-items: center;
 }
 h1 {
 	text-align: center;
